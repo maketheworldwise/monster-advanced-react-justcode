@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Monsters from "./Assignments/Monsters/Monsters";
-import Pagination from "./Lectures/Pagination/Users";
+import Pagination from "./Lectures/Pagination/Pagination";
 import UrlParameters from "./Lectures/UrlParameters/Monsters";
 import MonsterDetail from "./Lectures/UrlParameters/MonsterDetail";
 import StateProps from "./Lectures/StateProps/StateProps";

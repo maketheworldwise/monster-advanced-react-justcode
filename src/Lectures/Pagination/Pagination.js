@@ -1,7 +1,9 @@
+import { cleanup } from "@testing-library/react";
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Buttons from "./Components/Buttons";
 import CardList from "./Components/CardList/CardList";
-import "./Users.scss";
+import "./Pagination.scss";
 
 /**********************************************************
   
@@ -17,20 +19,34 @@ import "./Users.scss";
 
 ***********************************************************/
 
-export default function Users() {
+export default function Pagination() {
   const [users, setUsers] = useState([]);
+  const locations = useLocation();
+  const navigate = useNavigate();
 
-  // 데이터 로딩
   useEffect(() => {
-    fetch("http://localhost:8000/users")
+    fetch(`https://node-pagnation.herokuapp.com/users${locations.search}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((res) => setUsers(res.users));
-  }, []);
+
+    return cleanup();
+  }, [locations.search]);
+
+  const handleBtnClick = (page) => {
+    const limit = 20;
+    const query = `limit=${limit}&offset=${page * limit}`;
+    navigate(`/pagination?${query}`);
+  };
 
   return (
     <div className="photos">
       <h1>Mini Project - Pagination</h1>
-      <Buttons />
+      <Buttons handleBtnClick={handleBtnClick} />
       <CardList users={users} />
     </div>
   );
